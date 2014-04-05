@@ -8,6 +8,8 @@ k2 = 100
 b = 0.75
 R = 0.0
 
+mu_values = [10, 100, 200, 500, 1000, 2000, 2500, 3000, 5000]
+
 
 def score_BM25(n, f, qf, r, N, dl, avdl):
 	K = compute_K(dl, avdl)
