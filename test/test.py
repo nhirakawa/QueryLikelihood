@@ -93,6 +93,18 @@ class DataStructureTest(unittest.TestCase):
 		idx.add('cba', 3)
 		self.assertEqual(idx.get_collection_frequency(), 5)
 
+	def test_inverted_index_total_frequency(self):
+		idx = InvertedIndex()
+		idx.add('abc', 1)
+		self.assertEqual(idx.get_total_frequency('abc'), 1)
+		idx.add('abc', 2)
+		self.assertEqual(idx.get_total_frequency('abc'), 2)
+		idx.add('abc', 2)
+		self.assertEqual(idx.get_total_frequency('abc'), 3)
+		idx.add('cba', 2)
+		self.assertEqual(idx.get_total_frequency('cba'), 1)
+		self.assertEqual(idx.get_total_frequency('abc'), 3)
+
 	def test_inverted_index_get_item(self):
 		idx = InvertedIndex()
 		idx.add('abc', 1)

@@ -53,6 +53,16 @@ class InvertedIndex:
 				freq += self.index[word][doc]
 		return freq
 
+	#frequency of word across collection
+	def get_total_frequency(self, word):
+		result = 0
+		if word in self.index:
+			d = self.index[word]
+			for doc in d:
+				result += d[doc]
+			return result
+		else:
+			return result
 
 
 
