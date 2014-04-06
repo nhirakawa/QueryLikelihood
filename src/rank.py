@@ -21,3 +21,9 @@ def score_BM25(n, f, qf, r, N, dl, avdl):
 
 def compute_K(dl, avdl):
 	return k1 * ((1-b) + b * (float(dl)/float(avdl)) )
+
+
+def score_query_likelihood(f, mu, c, C, D):
+	numerator = float(f) + float(mu) * (float(c) / float(C))
+	denominator = float(D) + float(mu)
+	return log(numerator/denominator)
