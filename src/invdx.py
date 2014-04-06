@@ -14,6 +14,9 @@ class InvertedIndex:
 	def __getitem__(self, item):
 		return self.index[item]
 
+	def __len__(self):
+		return len(self.index)
+
 	def add(self, word, docid):
 		if word in self.index:
 			if docid in self.index[word]:
@@ -41,6 +44,17 @@ class InvertedIndex:
 			return len(self.index[word])
 		else:
 			raise LookupError('%s not in index' % word)
+
+	#frequency of word in collection, i.e. total number of occurrences of all words
+	def get_collection_frequency(self):
+		freq = 0
+		for word in self.index:
+			for doc in self.index[word]:
+				freq += self.index[word][doc]
+		return freq
+
+
+
 
 
 class DocumentLengthTable:
