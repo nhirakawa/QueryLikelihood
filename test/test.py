@@ -41,6 +41,14 @@ class RankTest(unittest.TestCase):
 	def test_computeK(self):
 		self.assertAlmostEqual(compute_K(9, 10), 1.11, delta=0.05)
 
+	def test_query_likelihood(self):
+		likelihood1 = score_query_likelihood(15, 2000, 160000, 1000000000, 1800)
+		self.assertAlmostEqual(likelihood1, -5.51, delta=0.01)
+		likelihood2 = score_query_likelihood(25, 2000, 2400, 1000000000, 1800)
+		self.assertAlmostEqual(likelihood2, -5.02, delta=0.01)
+
+		self.assertAlmostEqual(likelihood1 + likelihood2, -10.53, delta=0.01)
+
 
 class DataStructureTest(unittest.TestCase):
 
