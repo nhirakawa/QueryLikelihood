@@ -4,6 +4,8 @@ __author__ = 'Nick Hirakawa'
 from parse import *
 from query import *
 import operator
+import os
+import subprocess
 
 
 def main():
@@ -18,17 +20,31 @@ def main():
 	proc = QueryProcessor(queries, corpus, score_function='Query Likelihood')
 	print 'running queries'
 	results = proc.run()
-	num = 0
-	for result in results:
-		for key, value in result.iteritems():
-			scores = sorted(value.iteritems(), key=operator.itemgetter(1))
-			scores.reverse()
-			#print key, scores[:10]
-			num += 1
-	print num
+	lines = OrderedDict()
+	for index, result in enumerate(results):
+		for mu, l in result.iteritems():
+			s = sorted([(k, v) for k, v in l.iteritems()], key=operator.itemgetter(1))
+			s.reverse()
+			for rank, x in enumerate(s[:10]):
+				tmp = index, x[0], rank+1, x[1]
+				line = '{:>1} Q0 {:0>4} {:0>2} {:>2.10f} NH-BM25\n'.format(*tmp)
+				if mu in lines:
+					lines[mu].append(line)
+				else:
+					lines[mu] = [line]
+	for mu, txt in lines.iteritems():
+		filename = '../results/run.%d' % mu
+		with open(filename, 'w+') as f:
+			f.writelines(txt)
+
+
+
+def make_dir():
+	if not os.path.exists('../results'):
+		os.makedirs('../results')
 
 
 if __name__ == '__main__':
-	import timeit
-	#print timeit.timeit('main()', setup='from __main__ import main', number=5)
+	make_dir()
 	main()
+	subprocess.call(['java', '-jar', '../tool/eval.jar', '-d', '../results'])
