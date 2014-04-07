@@ -27,7 +27,7 @@ def main():
 			s.reverse()
 			for rank, x in enumerate(s[:10]):
 				tmp = index, x[0], rank+1, x[1]
-				line = '{:>1} Q0 {:0>4} {:0>2} {:>2.10f} NH-BM25\n'.format(*tmp)
+				line = '{:>1} Q0 {:0>4} {:0>2} {:>2.10f} NH-QL\n'.format(*tmp)
 				if mu in lines:
 					lines[mu].append(line)
 				else:
