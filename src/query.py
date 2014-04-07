@@ -13,10 +13,13 @@ class QueryProcessor:
 
 	def run(self):
 		results = []
+		qid = 0
 		for query in self.queries:
 			if self.score_function == 'BM25':
 				results.append(self.run_BM25(query))
 			elif self.score_function == 'Query Likelihood':
+				print 'running query %d' % qid
+				qid += 1
 				results.append(self.run_QueryLikelihood(query))
 		return results
 
@@ -43,7 +46,7 @@ class QueryProcessor:
 				if term in self.index:
 					for docid, freq in self.index[term].iteritems():
 						score = score_query_likelihood(f=freq, mu=mu, c=self.index.get_total_frequency(term),
-													   C=self.index.get_collection_frequency(), D=len(self.dlt))
+													   C=len(self.index), D=len(self.dlt))
 						if docid in mu_result:
 							mu_result[docid] += score
 						else:
