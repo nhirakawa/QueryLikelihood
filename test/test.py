@@ -63,6 +63,16 @@ class DataStructureTest(unittest.TestCase):
 		idx.add('abc', 2)
 		self.assertEqual(idx.get_index_frequency('abc'), 2)
 
+	def test_frequency_table(self):
+		ft = WordFrequencyTable()
+		ft.add('abc')
+		self.assertEqual(ft.get_frequency('abc'), 1)
+		ft.add('abc')
+		self.assertEqual(ft.get_frequency('abc'), 2)
+		ft.add('cba')
+		self.assertEqual(ft.get_frequency('abc'), 2)
+		self.assertEqual(ft.get_frequency('cba'), 1)
+
 	def test_inverted_index_contains(self):
 		idx = InvertedIndex()
 		idx.add('abc', 1)
@@ -71,27 +81,16 @@ class DataStructureTest(unittest.TestCase):
 		idx.add('cba', 2)
 		self.assertTrue('cba' in idx)
 
-	def test_inverted_index_length(self):
+	def test_inerted_index_length(self):
 		idx = InvertedIndex()
 		idx.add('abc', 1)
 		self.assertEqual(len(idx), 1)
-		idx.add('abc', 2)
-		self.assertEqual(len(idx), 1)
-		idx.add('cba', 1)
+		idx.add('abc', 1)
 		self.assertEqual(len(idx), 2)
-
-	def test_inverted_index_collection_frequency(self):
-		idx = InvertedIndex()
-		idx.add('abc', 1)
-		self.assertEqual(idx.get_collection_frequency(), 1)
-		idx.add('abc', 1)
-		self.assertEqual(idx.get_collection_frequency(), 2)
 		idx.add('abc', 2)
-		self.assertEqual(idx.get_collection_frequency(), 3)
-		idx.add('cba', 1)
-		self.assertEqual(idx.get_collection_frequency(), 4)
+		self.assertEqual(len(idx), 3)
 		idx.add('cba', 3)
-		self.assertEqual(idx.get_collection_frequency(), 5)
+		self.assertEqual(len(idx), 4)
 
 	def test_inverted_index_total_frequency(self):
 		idx = InvertedIndex()
@@ -125,4 +124,4 @@ class DataStructureTest(unittest.TestCase):
 		dlt = DocumentLengthTable()
 		dlt.add(1, 1)
 		dlt.add(2, 3)
-		self.assertAlmostEqual(dlt.get_average_length(), 2, delta=0.05)
+		self.assertAlmostEqual(dlt.get_average_length(), 2, delta=0.01)
