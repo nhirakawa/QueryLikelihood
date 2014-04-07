@@ -8,7 +8,7 @@ import operator
 class QueryProcessor:
 	def __init__(self, queries, corpus, score_function='BM25'):
 		self.queries = queries
-		self.index, self.dlt = build_data_structures(corpus)
+		self.index, self.ft, self.dlt = build_data_structures(corpus)
 		self.score_function = score_function
 
 	def run(self):
@@ -45,7 +45,7 @@ class QueryProcessor:
 			for term in query:
 				if term in self.index:
 					for docid, freq in self.index[term].iteritems():
-						score = score_query_likelihood(f=freq, mu=mu, c=self.index.get_total_frequency(term),
+						score = score_query_likelihood(f=freq, mu=mu, c=self.ft.get_frequency(term),
 													   C=len(self.index), D=len(self.dlt))
 						if docid in mu_result:
 							mu_result[docid] += score
