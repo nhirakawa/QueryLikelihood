@@ -18,7 +18,14 @@ def main():
 	proc = QueryProcessor(queries, corpus, score_function='Query Likelihood')
 	print 'running queries'
 	results = proc.run()
-	print results
+	num = 0
+	for result in results:
+		for key, value in result.iteritems():
+			scores = sorted(value.iteritems(), key=operator.itemgetter(1))
+			scores.reverse()
+			#print key, scores[:10]
+			num += 1
+	print num
 
 
 if __name__ == '__main__':
