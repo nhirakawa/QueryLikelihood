@@ -104,13 +104,13 @@ class DocumentLengthTable:
 def build_data_structures(corpus):
 	idx = InvertedIndex()
 	dlt = DocumentLengthTable()
+	ft = WordFrequencyTable()
 	for docid in corpus:
-
-		#build inverted index
+		#build inverted index and word frequency table
 		for word in corpus[docid]:
 			idx.add(str(word), str(docid))
-
+			ft.add(word)
 		#build document length table
 		length = len(corpus[str(docid)])
 		dlt.add(docid, length)
-	return idx, dlt
+	return idx, ft, dlt
