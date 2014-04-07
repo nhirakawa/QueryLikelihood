@@ -1,7 +1,9 @@
 __author__ = 'Nick Hirakawa'
 
+
 from invdx import build_data_structures
 from rank import *
+from collections import OrderedDict
 import operator
 
 
@@ -39,7 +41,7 @@ class QueryProcessor:
 		return query_result
 
 	def run_QueryLikelihood(self, query):
-		query_result = dict()
+		query_result = OrderedDict()
 		for mu in mu_values:
 			mu_result = dict()
 			for term in query:
