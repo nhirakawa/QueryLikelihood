@@ -46,12 +46,33 @@ class QueryProcessor:
 			mu_result = dict()
 			for term in query:
 				if term in self.index:
+					docs = set()
+					#score documents containing term
 					for docid, freq in self.index[term].iteritems():
 						score = score_query_likelihood(f=freq, mu=mu, c=self.ft.get_frequency(term),
 													   C=len(self.index), D=len(self.dlt))
+						docs.add(docid)
 						if docid in mu_result:
 							mu_result[docid] += score
 						else:
 							mu_result[docid] = score
+					a = [str(x) for x in range(len(self.dlt))]
+					s = set(a).difference(docs)
+					#score documents not containing term
+					for docid in s:
+						score = score_query_likelihood(f=0, mu=mu, c=self.ft.get_frequency(term), C=len(self.index), D=len(self.dlt))
+						if docid in mu_result:
+							mu_result[docid] += score
+						else:
+							mu_result[docid] = score
+				else:
+					score = score_query_likelihood(f=0, mu=mu, c=self.ft.get_frequency(term), C=len(self.index), D=len(self.dlt))
+					for i in range(len(self.dlt)):
+						if i in mu_result:
+							mu_result[i] += score
+						else:
+							mu_result[i] = score
+			for docid in mu_result:
+				mu_result[docid] = mu_result[docid]
 			query_result[mu] = mu_result
 		return query_result
