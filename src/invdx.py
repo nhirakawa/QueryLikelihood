@@ -1,5 +1,7 @@
 #invdx.py
 # An inverted index
+from collections import OrderedDict
+
 __author__ = 'Nick Hirakawa'
 
 
@@ -17,6 +19,16 @@ class InvertedIndex:
 
 	def __len__(self):
 		return self.count
+
+	def write(self, filename='default.index'):
+		with open(filename, 'w') as f:
+			for word in self.index:
+				line = word + ' '
+				for docid in self.index[word]:
+					line += '%s-%d ' % (docid, self.index[word][docid])
+				line += '\n'
+				f.write(line)
+
 
 	def add(self, word, docid):
 		if word in self.index:
@@ -62,7 +74,19 @@ class InvertedIndex:
 class WordFrequencyTable:
 
 	def __init__(self):
-		self.table = dict()
+		self.table = OrderedDict()
+
+	def __len__(self):
+		result = 0
+		for word in self.table:
+			result += self.table[word]
+		return result
+
+	def write(self, filename='default.ft'):
+		with open(filename, 'w') as f:
+			for word in self.table:
+				line = '%s %d\n' % (word, self.table[word])
+				f.write(line)
 
 	def get_frequency(self, word):
 		if word in self.table:
@@ -80,10 +104,17 @@ class WordFrequencyTable:
 class DocumentLengthTable:
 
 	def __init__(self):
-		self.table = dict()
+		self.table = OrderedDict()
 
 	def __len__(self):
 		return len(self.table)
+
+	def write(self, filename='default.dlt'):
+		with open(filename, 'w') as f:
+			for docid in self.table:
+				line = '%s %d\n' % (docid, self.table[docid])
+				f.write(line)
+
 
 	def add(self, docid, length):
 		self.table[docid] = length
