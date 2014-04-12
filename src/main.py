@@ -17,7 +17,11 @@ def main():
 	print 'parsing corpus'
 	cp.parse()
 	corpus = cp.get_corpus()
-	proc = QueryProcessor(queries, corpus, score_function='Query Likelihood')
+	idx, ft, dlt = build_data_structures(corpus)
+	idx.write('../test.idx')
+	ft.write('../test.ft')
+	dlt.write('../test.dlt')
+	proc = QueryProcessor(queries, idx='../test.idx', dlt=dlt, ft=ft, score_function='Query Likelihood')
 	print 'running queries'
 	results = proc.run()
 	lines = OrderedDict()
@@ -33,7 +37,7 @@ def main():
 				else:
 					lines[mu] = [line]
 	for mu, txt in lines.iteritems():
-		filename = '../results/run.%d' % mu
+		filename = '../results/test-run.%d' % mu
 		with open(filename, 'w+') as f:
 			f.writelines(txt)
 
