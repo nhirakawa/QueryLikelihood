@@ -17,11 +17,13 @@ def main():
 	print 'parsing corpus'
 	cp.parse()
 	corpus = cp.get_corpus()
+	print 'building data structures'
+	#step 1: build inverted index
 	idx, ft, dlt = build_data_structures(corpus)
-	idx.write('../test.idx')
-	ft.write('../test.ft')
-	dlt.write('../test.dlt')
-	proc = QueryProcessor(queries, idx='../test.idx', dlt=dlt, ft=ft, score_function='Query Likelihood')
+	idx.write('../default.idx')
+
+	#step 2: run queries against inverted index file
+	proc = QueryProcessor(queries, idx='../default.idx', dlt=dlt, ft=ft, score_function='Query Likelihood')
 	print 'running queries'
 	results = proc.run()
 	lines = OrderedDict()
@@ -37,10 +39,9 @@ def main():
 				else:
 					lines[mu] = [line]
 	for mu, txt in lines.iteritems():
-		filename = '../results/test-run.%d' % mu
-		with open(filename, 'w+') as f:
+		filename = '../results/run.%d' % mu
+		with open(filename, 'w') as f:
 			f.writelines(txt)
-
 
 
 def make_dir():
