@@ -26,4 +26,4 @@ def compute_K(dl, avdl):
 def score_query_likelihood(f, mu, c, C, D):
 	numerator = float(f) + float(mu) * (float(c) / float(C))
 	denominator = float(D) + float(mu)
-	return log(numerator/denominator)
+	return numerator/denominator
