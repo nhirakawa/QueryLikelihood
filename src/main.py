@@ -26,8 +26,9 @@ def main():
 			s = sorted([(k, v) for k, v in l.iteritems()], key=operator.itemgetter(1))
 			s.reverse()
 			for rank, x in enumerate(s[:10]):
-				tmp = index, x[0], rank+1, x[1]
-				line = '{:>1} Q0 {:0>4} {:0>2} {:>2.10f} NH-QL\n'.format(*tmp)
+				tmp = index+1, x[0], rank+1, x[1]
+				#line = '{:>1} Q0 {:0>4} {:<2} {:>2.10f} NH-QL\n'.format(*tmp)
+				line = '%d Q0 %s %d %f NH-QL\n' % tmp
 				if mu in lines:
 					lines[mu].append(line)
 				else:
