@@ -53,5 +53,8 @@ class QueryProcessor:
 							mu_result[docid] += score
 						else:
 							mu_result[docid] = score
+				else:
+					score = score_query_likelihood(f=0, mu=mu, c=0, C=len(self.index), D=len(self.dlt))
+					
 			query_result[mu] = mu_result
 		return query_result
