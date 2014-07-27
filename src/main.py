@@ -17,8 +17,9 @@ def main():
 	print 'parsing corpus'
 	cp.parse()
 	corpus = cp.get_corpus()
-	print 'building data structures'
+
 	#step 1: build inverted index
+	print 'building data structures'
 	idx, ft, dlt = build_data_structures(corpus)
 	idx.write('../default.idx')
 
