@@ -5,7 +5,15 @@ A toy search engine, written in Python
 Uses Query Likelihood model to evaluate results
 Uses CouchDB to store inverted index
 
+Setup
+=====
+
+To run, you need:
+- Python 2.7
+- Access to a [http://couchdb.apache.org](CouchDB) instance (need to change db address, defaults to `http://localhost:5984`)
+
 To Run
 ======
 
-To run: `$ python main.py`
+Start CouchDB instance
+Run `$ python main.py`
