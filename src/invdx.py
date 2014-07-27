@@ -33,13 +33,6 @@ class InvertedIndex:
 			request.get_method = lambda: 'PUT'
 			url = opener.open(request)
 
-	def put_request(self, word, list={}):
-		data = dumps(list)
-		opener = build_opener(HTTPHandler)
-		request = Request('http://localhost:5984/search/' + word, data=data)
-		request.get_method = lambda: 'PUT'
-		opener.open(request)
-
 	def bulk_load(self, docs):
 		self.build_db()
 		data = dumps(docs)
