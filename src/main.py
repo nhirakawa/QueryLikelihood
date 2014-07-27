@@ -21,7 +21,7 @@ def main():
 	#step 1: build inverted index
 	print 'building data structures'
 	idx, ft, dlt = build_data_structures(corpus)
-	idx.write('../default.idx')
+	idx.to_db()
 
 	#step 2: run queries against inverted index file
 	proc = QueryProcessor(queries, idx='../default.idx', dlt=dlt, ft=ft, score_function='Query Likelihood')
@@ -53,4 +53,4 @@ def make_dir():
 if __name__ == '__main__':
 	make_dir()
 	main()
-	subprocess.call(['java', '-jar', '../tool/eval.jar', '-d', '../results'])
+	# subprocess.call(['java', '-jar', '../tool/eval.jar', '-d', '../results'])
