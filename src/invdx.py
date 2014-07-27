@@ -29,7 +29,6 @@ class InvertedIndex:
 				line += '\n'
 				f.write(line)
 
-
 	def add(self, word, docid):
 		if word in self.index:
 			if docid in self.index[word]:
