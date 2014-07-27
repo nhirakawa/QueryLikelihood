@@ -52,9 +52,6 @@ class InvertedIndex:
 		upload = {'docs': docs}
 		self.bulk_load(upload)
 
-
-
-
 	def write(self, filename='default.index'):
 		with open(filename, 'w') as f:
 			for word in self.index:
